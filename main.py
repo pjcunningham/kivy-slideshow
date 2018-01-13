@@ -262,23 +262,23 @@ class MainWindow(FloatLayout):
 
 class SlideshowApp(App):
 
-    def __init__(self, base_directory, interval, port, host, media_controller=None, **kwargs):
+    def __init__(self, base_directory, interval, port, host, cast=None, **kwargs):
         super(SlideshowApp, self).__init__(**kwargs)
         self.base_directory = base_directory
         self.interval=interval
         self.port = port
         self.host = host
-        self.media_controller = media_controller
+        self.cast = cast
         self.title = "Slideshow"
 
     def build(self):
         cast_controller = None
-        if self.media_controller:
+        if self.cast:
             resource = File(self.base_directory)
             factory = Site(resource)
             endpoint = endpoints.TCP4ServerEndpoint(reactor, self.port, interface=self.host)
             endpoint.listen(factory)
-            cast_controller = CastController(media_controller=media_controller, host=self.host, port=self.port)
+            cast_controller = CastController(media_controller=cast.media_controller, host=self.host, port=self.port)
         return MainWindow(base_directory=self.base_directory, interval=self.interval, cast_controller=cast_controller)
 
 
@@ -296,19 +296,6 @@ if __name__ == '__main__':
     else:
         print "Casting disabled"
 
-    # casts = pychromecast.get_chromecasts()
-    # media_controller = casts[0].media_controller if len(casts) > 0 else None
-    media_controller = None
-
-    # import ifaddr
-    #
-    # adapters = ifaddr.get_adapters()
-    #
-    # for adapter in adapters:
-    #     print "IPs of network adapter " + adapter.nice_name
-    #     for ip in adapter.ips:
-    #         print "   %s/%s" % (ip.ip, ip.network_prefix)
-
     import netifaces
     gws = netifaces.gateways()
     default_gateway_address = gws['default'][netifaces.AF_INET][0]
@@ -320,4 +307,4 @@ if __name__ == '__main__':
             local_lan_address = address[netifaces.AF_INET][0]['addr']
             break
 
-    SlideshowApp(base_directory=_base_directory, port=_port, interval=_interval, media_controller=media_controller, host=local_lan_address).run()
+    SlideshowApp(base_directory=_base_directory, port=_port, interval=_interval, cast=cast, host=local_lan_address).run()
