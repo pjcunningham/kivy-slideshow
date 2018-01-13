@@ -251,6 +251,9 @@ class ImageViewer(FloatLayout):
         if not self.paused:
             self.image.next_image(is_loop=True)
 
+    def start(self):
+        self.image.first_image()
+
 
 class MainWindow(FloatLayout):
 
@@ -258,6 +261,7 @@ class MainWindow(FloatLayout):
         super(MainWindow, self).__init__(**kwargs)
         self.image_view = ImageViewer(base_directory=base_directory, interval=interval, cast_controller=cast_controller)
         self.add_widget(self.image_view)
+        self.image_view.start()
 
 
 class SlideshowApp(App):
@@ -282,9 +286,12 @@ class SlideshowApp(App):
         return MainWindow(base_directory=self.base_directory, interval=self.interval, cast_controller=cast_controller)
 
     def on_start(self):
+        print "App Starting"
 
     def on_stop(self):
+        print "App Stopping"
         if self.cast:
+            cast.quit_app()
 
 
 if __name__ == '__main__':
