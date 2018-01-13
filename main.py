@@ -105,11 +105,6 @@ class MainImage(Image):
         super(MainImage, self).__init__(**kwargs)
         self.cast_controller = cast_controller
         self.meta = meta
-        self.source = self.meta.list[0].path
-
-        texture = self._coreimage.texture
-        self.reference_size = texture.size
-        self.texture = texture
 
     def texture_update(self, *largs):
         if not self.source:
