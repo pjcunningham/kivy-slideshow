@@ -96,7 +96,8 @@ class CastController(object):
         if self.media_controller:
             _url = uricompose(scheme=self.scheme, host=self.host, port=self.port, path='/' + image)
             _content_type = mimetypes.guess_type(_url, strict=True)
-            self.media_controller.play_media(url=_url, content_type=_content_type)
+            print "Casting : {}, format : {}".format(_url, _content_type[0])
+            self.media_controller.play_media(url=_url, content_type=_content_type[0])
 
 
 class MainImage(Image):
