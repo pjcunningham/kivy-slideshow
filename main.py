@@ -287,6 +287,14 @@ if __name__ == '__main__':
     _base_directory = args.directory
     _port = args.port
     _interval = max(1, args.interval)
+    _enable_cast = args.cast
+
+    cast = None
+    if _enable_cast:
+        casts = pychromecast.get_chromecasts()
+        cast = casts[0] if len(casts) > 0 else None
+    else:
+        print "Casting disabled"
 
     # casts = pychromecast.get_chromecasts()
     # media_controller = casts[0].media_controller if len(casts) > 0 else None
