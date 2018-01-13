@@ -281,6 +281,11 @@ class SlideshowApp(App):
             cast_controller = CastController(media_controller=cast.media_controller, host=self.host, port=self.port)
         return MainWindow(base_directory=self.base_directory, interval=self.interval, cast_controller=cast_controller)
 
+    def on_start(self):
+
+    def on_stop(self):
+        if self.cast:
+
 
 if __name__ == '__main__':
 
