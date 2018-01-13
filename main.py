@@ -29,6 +29,7 @@ if __name__ == '__main__':
     parser.add_argument("-D", "--directory", required=True, help="Slideshow directory, defaults to ~/Pictures")
     parser.add_argument("-P", "--port", type=int, default=8888, required=False, help="Slideshow webserver port, defaults to 9990")
     parser.add_argument("-I", "--interval", type=int, default=5, required=False, help="Slideshow interval in seconds, defaults to 5")
+    parser.add_argument('-C', "--cast", help='Enable Chromecast', action='store_true')
     parser.add_argument('--', dest="args", help="Kivy arguments. All arguments after this are interpreted by Kivy. Pass \"-- --help\" to get Kivy's usage.")
     args = parser.parse_args(argv)
 
