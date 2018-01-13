@@ -147,18 +147,24 @@ class MainImage(Image):
                 ci.bind(on_texture=self._on_tex_change)
                 self.texture = ci.texture
 
+    def first_image(self):
+        print "First Image"
+        self.meta.pos = 0
+        self.source = self.meta.list[self.meta.pos].path
+        self._cast()
+
     def next_image(self, is_loop=False):
+        print "Next Image"
         if self.meta.pos < len(self.meta.list) - 1:
             self.meta.pos += 1
             self.source = self.meta.list[self.meta.pos].path
             self._cast()
         else:
             if is_loop:
-                self.meta.pos = 1
-                self.source = self.meta.list[self.meta.pos].path
-                self._cast()
+                self.first_image()
 
     def previous_image(self):
+        print "Previous Image"
         if self.meta.pos > 0:
             self.meta.pos -= 1
             self.source = self.meta.list[self.meta.pos].path
